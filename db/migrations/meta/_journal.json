@@ -1,0 +1,41 @@
+{
+  "version": "5",
+  "dialect": "pg",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "5",
+      "when": 1704149080854,
+      "tag": "0000_smooth_grey_gargoyle",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "5",
+      "when": 1704149482002,
+      "tag": "0001_useful_mole_man",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1704172465001,
+      "tag": "0002_empty_shatterstar",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "5",
+      "when": 1704196229240,
+      "tag": "0003_burly_katie_power",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "5",
+      "when": 1704197034136,
+      "tag": "0004_quiet_ultimates",
+      "breakpoints": true
+    }
+  ]
+}
