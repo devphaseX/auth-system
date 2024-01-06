@@ -4,6 +4,8 @@ import { signIn } from '@/auth';
 import { users } from '@/db/schema';
 import { db } from '@/db/setup';
 import { serverAction } from '@/lib/action';
+import { sendVerificationEmail } from '@/lib/mail';
+import { generateVerificationToken } from '@/lib/token';
 import { DEFAULT_LOGIN_REDIRECT } from '@/routes';
 import { LoginSchema } from '@/schemas';
 import { eq } from 'drizzle-orm';
@@ -31,6 +33,13 @@ export const loginAction = serverAction(LoginSchema, async (formData) => {
         }
 
         if (!existingUser.emailVerified) {
+          const verificationToken = await generateVerificationToken(
+            existingUser.email
+          );
+          await sendVerificationEmail(
+            verificationToken.identifier,
+            verificationToken.token
+          );
           return { message: 'Confirmation Email is sent' };
         }
 

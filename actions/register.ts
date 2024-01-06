@@ -4,6 +4,7 @@ import { users } from '@/db/schema';
 import { db } from '@/db/setup';
 import { serverAction } from '@/lib/action';
 import { hashedPassword } from '@/lib/auth';
+import { sendVerificationEmail } from '@/lib/mail';
 import { generateVerificationToken } from '@/lib/token';
 import { RegitserSchema } from '@/schemas';
 import { NeonDbError } from '@neondatabase/serverless';
@@ -33,7 +34,10 @@ export const registerAction = serverAction(RegitserSchema, async (formData) => {
       });
 
     const verificationToken = await generateVerificationToken(newUser.email);
-
+    await sendVerificationEmail(
+      verificationToken.identifier,
+      verificationToken.token
+    );
     return { message: 'Confirmation email sent' };
   } catch (e) {
     console.log({ e });

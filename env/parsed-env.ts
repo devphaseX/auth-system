@@ -6,6 +6,7 @@ const EnvSchema = object({
   GITHUB_CLIENT_SECRET: string(),
   GOOGLE_CLIENT_ID: string(),
   GOOGLE_CLIENT_SECRET: string(),
+  RESEND_API_KEY: string(),
 });
 
 const env = EnvSchema.parse(process.env);
