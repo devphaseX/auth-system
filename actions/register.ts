@@ -4,6 +4,7 @@ import { users } from '@/db/schema';
 import { db } from '@/db/setup';
 import { serverAction } from '@/lib/action';
 import { hashedPassword } from '@/lib/auth';
+import { generateVerificationToken } from '@/lib/token';
 import { RegitserSchema } from '@/schemas';
 import { NeonDbError } from '@neondatabase/serverless';
 import { getTableColumns } from 'drizzle-orm';
@@ -31,8 +32,11 @@ export const registerAction = serverAction(RegitserSchema, async (formData) => {
         ...publicInfo,
       });
 
-    return newUser;
+    const verificationToken = await generateVerificationToken(newUser.email);
+
+    return { message: 'Confirmation email sent' };
   } catch (e) {
+    console.log({ e });
     if (e instanceof NeonDbError) {
       if (e.code === '23505') {
         throw new Error('Email already in use.');

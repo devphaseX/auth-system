@@ -14,6 +14,7 @@ export const {
   ...authOption,
   adapter: DrizzleAdapter(db),
   session: { strategy: 'jwt' },
+  pages: { signIn: '/auth/login', error: '/auth/error' },
   events: {
     async linkAccount({ user }) {
       await db
@@ -25,7 +26,16 @@ export const {
     },
   },
   callbacks: {
-    async signIn({ user }) {
+    async signIn({ user, account }) {
+      if (account?.provider !== 'credentials') return true;
+
+      const [existingUser] = await db
+        .select()
+        .from(users)
+        .where(eq(users.id, user.id));
+
+      if (!(existingUser && existingUser.emailVerified)) return false;
+
       return true;
     },
     async session({ session, token }) {

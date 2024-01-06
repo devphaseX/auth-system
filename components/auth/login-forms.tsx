@@ -1,5 +1,5 @@
 'use client';
-
+import { useSearchParams } from 'next/navigation';
 import { CardWrapper } from './card-wrapper';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -43,8 +43,13 @@ export const LoginForm = () => {
     result.fetchError ??
     result.serverError ??
     (result.validationError && 'Invalid inputted form data');
-  const success = result.data || '';
+  const success = result.data?.message ?? '';
   const errorOnSignIn = status === 'hasErrored';
+  const searchParams = useSearchParams();
+  const urlError =
+    searchParams.get('error') === 'OAuthAccountNotLinked'
+      ? 'Email already in use with different provider!'
+      : '';
 
   return (
     <CardWrapper
@@ -98,7 +103,7 @@ export const LoginForm = () => {
               )}
             />
           </div>
-          <FormError message={error} />
+          <FormError message={error ?? urlError} />
           <FormSuccess message={success} />
           <Button type="submit" className="w-full" disabled={signingUser}>
             Login

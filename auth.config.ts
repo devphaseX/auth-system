@@ -58,10 +58,6 @@ export default {
             throw new Error('User credential not a match');
           }
 
-          // if(!existingUser.emailVerified) {
-          //   return
-          // }
-
           return existingUser;
         }
         throw new Error(

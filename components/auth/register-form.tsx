@@ -42,11 +42,7 @@ export const RegisterForm = () => {
     result.fetchError ??
     result.serverError ??
     (result.validationError && 'Invalid inputted form data');
-  const success = !!result.data ? 'Email sent' : null;
-
-  useEffect(() => {
-    return reset;
-  }, [success]);
+  const success = result?.data?.message ?? null;
 
   return (
     <CardWrapper
