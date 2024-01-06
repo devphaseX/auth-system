@@ -22,5 +22,5 @@ export const confirmPassword = async (
     throw new TypeError('Missing hashedPassword field');
   }
 
-  return bcrypt.compare(user.passwordHashed, enteredPassword);
+  return bcrypt.compare(enteredPassword, user.passwordHashed);
 };

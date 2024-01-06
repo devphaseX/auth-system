@@ -38,11 +38,13 @@ export const LoginForm = () => {
   };
 
   const signingUser = status === 'executing';
+
   const error =
     result.fetchError ??
     result.serverError ??
     (result.validationError && 'Invalid inputted form data');
   const success = result.data || '';
+  const errorOnSignIn = status === 'hasErrored';
 
   return (
     <CardWrapper
@@ -69,6 +71,7 @@ export const LoginForm = () => {
                       placeholder="john.doe@example.com"
                       type="email"
                       disabled={signingUser}
+                      onFocus={() => reset()}
                     />
                   </FormControl>
                   <FormMessage />
@@ -87,6 +90,7 @@ export const LoginForm = () => {
                       placeholder="******"
                       type="password"
                       disabled={signingUser}
+                      onFocus={() => reset()}
                     />
                   </FormControl>
                   <FormMessage />

@@ -1,6 +1,9 @@
+import { db } from '@/db/setup';
 import { LoginForm } from '../../../components/auth/login-forms';
+import { users } from '@/db/schema';
 
-const LoginPage = () => {
+export const dynamic = 'force-dynamic';
+const LoginPage = async () => {
   return <LoginForm />;
 };
 

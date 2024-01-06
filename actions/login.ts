@@ -13,16 +13,10 @@ export const loginAction = serverAction(LoginSchema, async (formData) => {
       redirectTo: DEFAULT_LOGIN_REDIRECT,
     });
   } catch (e) {
-    console.log(e);
     if (e instanceof AuthError) {
-      switch (e.type) {
-        case 'CredentialsSignin': {
-          throw new Error(e.message);
-        }
-
-        default:
-          throw new Error('Something went wrong');
-      }
+      let message = e.cause?.err?.message ?? e.message;
+      message = message.includes('database') ? 'Something went wrong' : message;
+      throw new Error(message);
     }
 
     throw e;

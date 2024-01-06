@@ -6,16 +6,19 @@ import {
   text,
   primaryKey,
   integer,
+  pgEnum,
 } from 'drizzle-orm/pg-core';
 
 import type { AdapterAccount } from '@auth/core/adapters';
 
+const userRole = pgEnum('user_role', ['admin', 'user']);
 const users = pgTable('user', {
   id: uuid('id').notNull().primaryKey().defaultRandom(),
   name: varchar('name', { length: 256 }),
   email: varchar('email', { length: 256 }).unique().notNull(),
   emailVerified: timestamp('emailVerified', { mode: 'date' }),
   image: varchar('image', { length: 256 }),
+  role: userRole('role').default('user'),
   passwordHashed: varchar('password', { length: 256 }),
   passwordSalt: varchar('password_salt', { length: 256 }),
 });
@@ -64,4 +67,4 @@ const verificationTokens = pgTable(
   })
 );
 
-export { users, accounts, sessions, verificationTokens };
+export { users, accounts, sessions, verificationTokens, userRole };
