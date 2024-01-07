@@ -4,13 +4,13 @@ import { users } from '@/db/schema';
 import { db } from '@/db/setup';
 import { serverAction } from '@/lib/action';
 import { hashedPassword } from '@/lib/auth';
-import { sendVerificationEmail } from '@/lib/mail';
+import { sendResetPasswordEmail } from '@/lib/mail';
 import { generateVerificationToken } from '@/lib/token';
-import { RegitserSchema } from '@/schemas';
+import { RegisterSchema } from '@/schemas';
 import { NeonDbError } from '@neondatabase/serverless';
 import { getTableColumns } from 'drizzle-orm';
 
-export const registerAction = serverAction(RegitserSchema, async (formData) => {
+export const registerAction = serverAction(RegisterSchema, async (formData) => {
   try {
     const { email, name, password } = formData;
     const { passwordHashed, salt } = await hashedPassword(password);
@@ -34,7 +34,7 @@ export const registerAction = serverAction(RegitserSchema, async (formData) => {
       });
 
     const verificationToken = await generateVerificationToken(newUser.email);
-    await sendVerificationEmail(
+    await sendResetPasswordEmail(
       verificationToken.identifier,
       verificationToken.token
     );

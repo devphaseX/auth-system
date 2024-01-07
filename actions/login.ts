@@ -4,7 +4,7 @@ import { signIn } from '@/auth';
 import { users } from '@/db/schema';
 import { db } from '@/db/setup';
 import { serverAction } from '@/lib/action';
-import { sendVerificationEmail } from '@/lib/mail';
+import { sendResetPasswordEmail } from '@/lib/mail';
 import { generateVerificationToken } from '@/lib/token';
 import { DEFAULT_LOGIN_REDIRECT } from '@/routes';
 import { LoginSchema } from '@/schemas';
@@ -36,7 +36,7 @@ export const loginAction = serverAction(LoginSchema, async (formData) => {
           const verificationToken = await generateVerificationToken(
             existingUser.email
           );
-          await sendVerificationEmail(
+          await sendResetPasswordEmail(
             verificationToken.identifier,
             verificationToken.token
           );

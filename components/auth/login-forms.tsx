@@ -16,6 +16,7 @@ import type { TypeOf } from 'zod';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Loader2 } from 'lucide-react';
+import Link from 'next/link';
 import { FormError } from '../form-error';
 import { FormSuccess } from '../form-success';
 import { useAction } from 'next-safe-action/hook';
@@ -105,6 +106,14 @@ export const LoginForm = () => {
                     />
                   </FormControl>
                   <FormMessage />
+                  <Button
+                    size="sm"
+                    variant="link"
+                    asChild
+                    className="px-0 font-normal"
+                  >
+                    <Link href="/auth/reset">Forgot password?</Link>
+                  </Button>
                 </FormItem>
               )}
             />

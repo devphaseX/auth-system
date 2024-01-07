@@ -67,4 +67,23 @@ const verificationTokens = pgTable(
   })
 );
 
-export { users, accounts, sessions, verificationTokens, userRole };
+const passwordTokens = pgTable(
+  'passwordToken',
+  {
+    identifier: text('identifier').notNull(),
+    token: text('token').notNull(),
+    expires: timestamp('expires', { mode: 'date' }).notNull(),
+  },
+  (vt) => ({
+    compoundKey: primaryKey({ columns: [vt.identifier, vt.token] }),
+  })
+);
+
+export {
+  users,
+  passwordTokens,
+  accounts,
+  sessions,
+  verificationTokens,
+  userRole,
+};

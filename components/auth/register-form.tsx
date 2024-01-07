@@ -11,7 +11,7 @@ import {
   FormLabel,
   FormMessage,
 } from '@/components/ui/form';
-import { RegitserSchema } from '@/schemas';
+import { RegisterSchema } from '@/schemas';
 import type { TypeOf } from 'zod';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
@@ -22,8 +22,8 @@ import { useAction } from 'next-safe-action/hook';
 import { registerAction } from '@/actions/register';
 import { useEffect } from 'react';
 export const RegisterForm = () => {
-  const form = useForm<TypeOf<typeof RegitserSchema>>({
-    resolver: zodResolver(RegitserSchema),
+  const form = useForm<TypeOf<typeof RegisterSchema>>({
+    resolver: zodResolver(RegisterSchema),
     defaultValues: {
       name: '',
       email: '',
@@ -33,7 +33,7 @@ export const RegisterForm = () => {
 
   const { execute, status, result, reset } = useAction(registerAction);
 
-  const onSubmitSignIn = (formData: TypeOf<typeof RegitserSchema>) => {
+  const onSubmitSignIn = (formData: TypeOf<typeof RegisterSchema>) => {
     execute(formData);
   };
 
